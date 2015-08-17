@@ -1,4 +1,5 @@
+LaunchGame = require './game/launch.coffee'
+
 #ready
 $(document).ready ->
-
-	console.log "World o' Hell"
+	LaunchGame()

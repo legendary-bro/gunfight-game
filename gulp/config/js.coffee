@@ -6,6 +6,7 @@ module.exports = (config) ->
   exposeGlobals:
     "$": "jquery"
     "_": "lodash"
+    # "Phaser": "phaser"
 
   bundles: [
     {
@@ -13,7 +14,7 @@ module.exports = (config) ->
       dest: "_app.js"
 
       # http://webpack.github.io/docs/configuration.html#externals
-      externals: [jquery:"jQuery", lodash:"_"]
+      externals: [jquery:"jQuery", lodash:"_", phaser:"Phaser"]
 
       # JSON.stringify because strings don't get escaped
       vars:
