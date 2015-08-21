@@ -9,6 +9,7 @@ PLAYER_TWO_Y = 340
 # MOVEMENT CONSTANTS
 SPEED = 60
 DELTA = 34
+FRAMERATE = 6
 
 # CONTROL CONSTANTS
 PLAYER_ONE_CONTROLS =
@@ -44,7 +45,16 @@ class Cowboy extends Phaser.Sprite
       left: false
       right: false
 
+    # movement vars
     @time = Date.now()
+    @moving = false
+    @dead = false
+
+    # frame vars
+    @gun_pos = ['low','medlow','med','medhigh','high']
+    @leg_pos = ['two','one','cross']
+    @gun_pos_index = 2
+    @leg_pos_index = 1
 
     # enable arcade physics
     @game.physics.enable @, Phaser.Physics.ARCADE
@@ -60,6 +70,8 @@ class Cowboy extends Phaser.Sprite
 
     # setup controls
     @setupControls()
+    # setup animations
+    @setupAnimations()
     # create state machine
     @createStateMachine()
 
@@ -70,14 +82,28 @@ class Cowboy extends Phaser.Sprite
     return @
 
   update: ->
+    # handle incremental movement
     current_time = Date.now()
-    if current_time - @time > SPEED
+    if current_time - @time > SPEED and !@dead
       @body.y -= DELTA if @direction.up    and @body.y > 0
       @body.x -= DELTA if @direction.left  and @body.x > 0
       @body.x += DELTA if @direction.right and @body.x < @game.width - @body.width
       @body.y += DELTA if @direction.down  and @body.y < @game.height - @body.height
       @time = current_time
 
+    # is the player moving?
+    @moving = false unless @direction.up || @direction.down || @direction.left || @direction.right
+
+    # trigger move animation
+    @move() if  @moving and @state.current != 'moving' and !@dead
+    @idle() if !@moving and @state.current != 'idle'   and !@dead
+
+  # change state
+  move:           -> @state._move()
+  idle:           -> @state._idle()
+  die:            -> @state._die()
+
+  # control direction
   move_up:        -> @direction.up    = true
   move_left:      -> @direction.left  = true
   move_right:     -> @direction.right = true
@@ -86,18 +112,60 @@ class Cowboy extends Phaser.Sprite
   move_left_off:  -> @direction.left  = false
   move_right_off: -> @direction.right = false
   move_down_off:  -> @direction.down  = false
+
+  # handle aiming
   aim_up: -> console.log 'aim_up'
   aim_down: -> console.log 'aim_down'
+
+  # shoot!
   shoot: -> console.log 'shoot'
 
   setupControls: ->
-    controls = if @is_player_one then PLAYER_ONE_CONTROLS else PLAYER_TWO_CONTROLS
-
     # map control keys
+    controls = if @is_player_one then PLAYER_ONE_CONTROLS else PLAYER_TWO_CONTROLS
     _.each controls, (key, action) =>
       input = @game_state.input.keyboard.addKey Phaser.Keyboard[key]
       input.onDown.add => @[action]()
+      input.onDown.add => @moving = true     if action.match 'move'
       input.onUp.add => @["#{action}_off"]() if action.match 'move'
+
+  setupAnimations: ->
+    # die animations
+    @animations.add 'die', [
+      
+    ], FRAMERATE, false
+
+    # move animatinos
+    @animations.add 'move-high', [
+      'cowboy/high/two.png'
+      'cowboy/high/one.png'
+      'cowboy/high/cross.png'
+      'cowboy/high/one.png'
+    ], FRAMERATE, true
+    @animations.add 'move-low', [
+      'cowboy/low/two.png'
+      'cowboy/low/one.png'
+      'cowboy/low/cross.png'
+      'cowboy/low/one.png'
+    ], FRAMERATE, true
+    @animations.add 'move-medhigh', [
+      'cowboy/medhigh/two.png'
+      'cowboy/medhigh/one.png'
+      'cowboy/medhigh/cross.png'
+      'cowboy/medhigh/one.png'
+    ], FRAMERATE, true
+    @animations.add 'move-medlow', [
+      'cowboy/medlow/two.png'
+      'cowboy/medlow/one.png'
+      'cowboy/medlow/cross.png'
+      'cowboy/medlow/one.png'
+    ], FRAMERATE, true
+    @animations.add 'move-med', [
+      'cowboy/med/two.png'
+      'cowboy/med/one.png'
+      'cowboy/med/cross.png'
+      'cowboy/med/one.png'
+    ], FRAMERATE, true
 
   createStateMachine: ->
     @state = StateMachine.create
@@ -107,8 +175,8 @@ class Cowboy extends Phaser.Sprite
         { name: '_move', from: '*', to: 'moving' }
         { name: '_die',  from: '*', to: 'dying'  } ]
       callbacks:
-        on_idle: (event, from, to) =>
-        on_move: (event, from, to) =>
-        on_die: (event, from, to) =>
+        on_idle: (event, from, to) => @animations.stop null, true
+        on_move: (event, from, to) => @play "move-#{@gun_pos[@gun_pos_index]}"
+        on_die: (event, from, to) => @dead = true
 
 module.exports = Cowboy

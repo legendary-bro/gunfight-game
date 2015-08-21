@@ -20,7 +20,7 @@ launch = (cdn="/", version="?v=0.0.0") ->
     Phaser.AUTO,  # renderer
     'game',       # ID of parent element
     'boot',       # state
-    false,         # transparent
+    false,        # transparent
     false,        # antialias
     null          # physicsConfig
   )
