@@ -8,11 +8,12 @@
     "body-parser": "^1.13.3",
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
+    "javascript-state-machine": "^2.3.5",
     "lodash": "^3.10.1",
     "method-override": "^2.3.5",
+    "phaser": "~2.4.2",
     "webpack": "^1.11.0",
-    "when": "^3.7.3",
-    "phaser": "~2.4.2"
+    "when": "^3.7.3"
   },
   "devDependencies": {
     "async": "^1.4.0",

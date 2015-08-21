@@ -1,1 +1,3 @@
-module.exports = {}
+levels = {}
+
+module.exports = levels

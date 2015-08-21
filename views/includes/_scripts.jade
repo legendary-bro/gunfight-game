@@ -1,10 +1,12 @@
 script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
 script(src='http://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js')
 
-
 if env === 'development'
+  script
+    include:js scripts/phaser.js
   script(src="#{cdn}javascripts/_app.js")
 else
+  script(src='//cdnjs.cloudflare.com/ajax/libs/phaser/2.4.2/phaser.min.js')
   script(src="#{cdn}javascripts/_app.min.js")
 
 

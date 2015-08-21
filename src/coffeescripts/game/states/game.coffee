@@ -14,10 +14,15 @@ class Game
   constructor: ->
 
   create: ->
-    
+    # create the players
+    @player_one = new Cowboy @game, @
+    @player_two = new Cowboy @game, @, false
+
 
   start: ->
 
   update: ->
 
   setupLevel: ->
+
+module.exports = Game

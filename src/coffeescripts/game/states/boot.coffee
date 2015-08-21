@@ -2,13 +2,15 @@ class Boot
   constructor: ->
 
   create: ->
-    #@scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
-    #@scale.scaleMode = Phaser.ScaleManager.RESIZE
+    # set background color to black
+    @game.stage.backgroundColor = '#000000'
+
+    # Scale the game in the browser
+    @scale.pageAlignHorizontally = true
     @scale.scaleMode = Phaser.ScaleManager.SHOW_ALL
 
     # start preload
     @state.start 'preload'
-    @scale.refresh()
 
   preload: ->
     # set intial scale

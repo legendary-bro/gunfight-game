@@ -1,24 +1,16 @@
 class Preload
   constructor: ->
 
-  create: ->
-    @load.crossOrigin = @game.hosturl  unless @game.cdn is '/'
+  preload: ->
+    @load.crossOrigin = @game.hosturl unless @game.cdn is '/'
 
     # LOAD STUFFS
     CDN = @game.cdn
     # SPRITES
-    # atlas(key, textureURL, atlasURL, atlasData, format)
-    texture_url = '../../../images/atlas.png'
+    key = 'atlas'
+    texture_url = "#{CDN}images/atlas.png"
     atlas_data = require '../constants/atlas.coffee'
-    # jsonAtlas = JSON.stringify atlasData
-    @load.atlasJSONHash 'atlas', texture_url, null, atlas_data
-
-    # _.each @game.constants.SPRITES, (sprite) =>
-    #   key = sprite.key
-    #   atlas_url = "#{CDN}#{sprite.atlas_url}"
-    #   atlas_data = sprite.atlas_data
-    #   # atlasJSONHash(key, textureURL, atlasURL, atlasData)
-    #   asset = @load.atlasJSONHash key, null, atlas_url, atlas_data
+    @load.atlasJSONHash key, texture_url, null, atlas_data
 
     # SFX
     _.each @game.constants.SFX, (sfx) =>

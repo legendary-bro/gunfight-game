@@ -1,1 +1,3 @@
-module.exports = {}
+sprites = {}
+
+module.exports = sprites 

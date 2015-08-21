@@ -1,5 +1,3 @@
-Phaser = require "phaser"
-
 $window = $(window)
 
 # mobile flag
@@ -9,11 +7,11 @@ isMobile = ->
   else
     false
 
-launch = (cdn="/", version="?v=0.0.0")->
+launch = (cdn="/", version="?v=0.0.0") ->
 
   # 4:3
-  game_width = 800
-  game_height = 600
+  game_width = 1088
+  game_height = 816
 
   # Construct Game
   game = new Phaser.Game(
@@ -22,21 +20,21 @@ launch = (cdn="/", version="?v=0.0.0")->
     Phaser.AUTO,  # renderer
     'game',       # ID of parent element
     'boot',       # state
-    true,         # transparent
+    false,         # transparent
     false,        # antialias
     null          # physicsConfig
   )
 
   # cdn
   game.cdn = cdn
-  game.hosturl = hosturl
+  game.hosturl = undefined #hosturl
 
   # game version
   game.version = version
 
   # debug
   game.debugMode = false
-  # game.debugMode = true
+  game.debugMode = true
 
   game.enableMusic = !game.debugMode
   game.enableSFX = !game.debugMode
@@ -50,6 +48,22 @@ launch = (cdn="/", version="?v=0.0.0")->
 
   # default level
   game.level = 1
+
+  # keep the game within the page
+  game.scaler = ->
+    $game = $("#game")
+    $canvas = $("canvas")
+    $window = $(window)
+
+    if !isMobile()
+      $game = $("#game")
+      $canvas = $("canvas")
+      $window = $(window)
+
+      if $game.height() > $window.height() - 150
+        $game.css("max-height", ($window.height() - 150) + "px")
+      else
+        $game.css("max-height", "auto")
 
   # require states and boot!
   game.state.add state, require("./states/#{state}.coffee") for state in game.constants.STATES

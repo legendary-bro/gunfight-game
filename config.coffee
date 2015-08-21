@@ -8,8 +8,8 @@ module.exports = ->
   version: '?v=0'
   env: 'development'
 
-  title: 'YouFoundRon'
-  site_description: 'Gulp frontend workflow.'
-  site_keywords: 'gulp, frontend'
+  title: 'Gun Fight Arcade Game'
+  site_description: 'Play free online Gun Fight arcade game!'
+  site_keywords: 'play, free, online, games, gun, fight, arcade'
 
   google_analytics: 'UA-XXXXXXXX-XX'

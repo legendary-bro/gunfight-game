@@ -1,1 +1,3 @@
-module.exports = {}
+sfx = {}
+
+module.exports = sfx
