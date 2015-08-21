@@ -56,6 +56,10 @@ class Cowboy extends Phaser.Sprite
     @gun_pos_index = 2
     @leg_pos_index = 1
 
+    # hud vars
+    @wins = 0
+    @bullets = 6
+
     # enable arcade physics
     @game.physics.enable @, Phaser.Physics.ARCADE
 
@@ -114,8 +118,29 @@ class Cowboy extends Phaser.Sprite
   move_down_off:  -> @direction.down  = false
 
   # handle aiming
-  aim_up: -> console.log 'aim_up'
-  aim_down: -> console.log 'aim_down'
+  aim_up: ->
+    current_frame = @animations.currentFrame.name
+    @gun_pos_index += 1 if @gun_pos_index < @gun_pos.length - 1
+
+    for pos, index in @leg_pos
+      @leg_pos_index = index
+      break if current_frame.match pos
+
+    @animations.stop()
+    @animations.play "move-#{@gun_pos[@gun_pos_index]}"
+    @animations.next @leg_pos_index
+
+  aim_down: ->
+    current_frame = @animations.currentFrame.name
+    @gun_pos_index -= 1 if @gun_pos_index > 0
+
+    for pos, index in @leg_pos
+      @leg_pos_index = index
+      break if current_frame.match pos
+
+    @animations.stop()
+    @animations.play "move-#{@gun_pos[@gun_pos_index]}"
+    @animations.next @leg_pos_index
 
   # shoot!
   shoot: -> console.log 'shoot'
@@ -132,7 +157,7 @@ class Cowboy extends Phaser.Sprite
   setupAnimations: ->
     # die animations
     @animations.add 'die', [
-      
+
     ], FRAMERATE, false
 
     # move animatinos
@@ -177,6 +202,6 @@ class Cowboy extends Phaser.Sprite
       callbacks:
         on_idle: (event, from, to) => @animations.stop null, true
         on_move: (event, from, to) => @play "move-#{@gun_pos[@gun_pos_index]}"
-        on_die: (event, from, to) => @dead = true
+        on_die: (event, from, to) => @dead = false
 
 module.exports = Cowboy
