@@ -1,310 +1,6 @@
 atlas =
   'frames':
-    'ammo.png':
-      'frame':
-        'x': 276
-        'y': 86
-        'w': 180
-        'h': 40
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 180
-        'h': 40
-      'sourceSize':
-        'w': 180
-        'h': 40
-    'bullet.png':
-      'frame':
-        'x': 490
-        'y': 44
-        'w': 8
-        'h': 8
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 8
-        'h': 8
-      'sourceSize':
-        'w': 8
-        'h': 8
-    'cowboy/dead/hit.png':
-      'frame':
-        'x': 230
-        'y': 170
-        'w': 96
-        'h': 132
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 96
-        'h': 132
-      'sourceSize':
-        'w': 96
-        'h': 132
-    'cowboy/dead/rip.png':
-      'frame':
-        'x': 2
-        'y': 128
-        'w': 128
-        'h': 44
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 128
-        'h': 44
-      'sourceSize':
-        'w': 128
-        'h': 44
-    'cowboy/high/cross.png':
-      'frame':
-        'x': 422
-        'y': 260
-        'w': 88
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 88
-        'h': 136
-      'sourceSize':
-        'w': 88
-        'h': 136
-    'cowboy/high/one.png':
-      'frame':
-        'x': 418
-        'y': 398
-        'w': 88
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 88
-        'h': 136
-      'sourceSize':
-        'w': 88
-        'h': 136
-    'cowboy/high/two.png':
-      'frame':
-        'x': 126
-        'y': 308
-        'w': 88
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 88
-        'h': 136
-      'sourceSize':
-        'w': 88
-        'h': 136
-    'cowboy/low/cross.png':
-      'frame':
-        'x': 2
-        'y': 450
-        'w': 84
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 84
-        'h': 136
-      'sourceSize':
-        'w': 84
-        'h': 136
-    'cowboy/low/one.png':
-      'frame':
-        'x': 88
-        'y': 544
-        'w': 84
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 84
-        'h': 136
-      'sourceSize':
-        'w': 84
-        'h': 136
-    'cowboy/low/two.png':
-      'frame':
-        'x': 2
-        'y': 588
-        'w': 84
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 84
-        'h': 136
-      'sourceSize':
-        'w': 84
-        'h': 136
-    'cowboy/med/cross.png':
-      'frame':
-        'x': 132
-        'y': 170
-        'w': 96
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 96
-        'h': 136
-      'sourceSize':
-        'w': 96
-        'h': 136
-    'cowboy/med/one.png':
-      'frame':
-        'x': 2
-        'y': 174
-        'w': 96
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 96
-        'h': 136
-      'sourceSize':
-        'w': 96
-        'h': 136
-    'cowboy/med/two.png':
-      'frame':
-        'x': 2
-        'y': 312
-        'w': 96
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 96
-        'h': 136
-      'sourceSize':
-        'w': 96
-        'h': 136
-    'cowboy/medhigh/cross.png':
-      'frame':
-        'x': 328
-        'y': 238
-        'w': 92
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 92
-        'h': 136
-      'sourceSize':
-        'w': 92
-        'h': 136
-    'cowboy/medhigh/one.png':
-      'frame':
-        'x': 230
-        'y': 304
-        'w': 92
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 92
-        'h': 136
-      'sourceSize':
-        'w': 92
-        'h': 136
-    'cowboy/medhigh/two.png':
-      'frame':
-        'x': 324
-        'y': 376
-        'w': 92
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 92
-        'h': 136
-      'sourceSize':
-        'w': 92
-        'h': 136
-    'cowboy/medlow/cross.png':
-      'frame':
-        'x': 216
-        'y': 442
-        'w': 88
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 88
-        'h': 136
-      'sourceSize':
-        'w': 88
-        'h': 136
-    'cowboy/medlow/one.png':
-      'frame':
-        'x': 306
-        'y': 514
-        'w': 88
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 88
-        'h': 136
-      'sourceSize':
-        'w': 88
-        'h': 136
-    'cowboy/medlow/two.png':
-      'frame':
-        'x': 396
-        'y': 536
-        'w': 88
-        'h': 136
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 88
-        'h': 136
-      'sourceSize':
-        'w': 88
-        'h': 136
-    'digits/0.png':
+    '0':
       'frame':
         'x': 442
         'y': 176
@@ -320,7 +16,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    'digits/1.png':
+    '1':
       'frame':
         'x': 494
         'y': 2
@@ -336,7 +32,7 @@ atlas =
       'sourceSize':
         'w': 16
         'h': 40
-    'digits/2.png':
+    '2':
       'frame':
         'x': 468
         'y': 176
@@ -352,7 +48,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    'digits/3.png':
+    '3':
       'frame':
         'x': 442
         'y': 218
@@ -368,7 +64,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    'digits/4.png':
+    '4':
       'frame':
         'x': 468
         'y': 218
@@ -384,7 +80,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    'digits/5.png':
+    '5':
       'frame':
         'x': 100
         'y': 174
@@ -400,7 +96,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    'digits/6.png':
+    '6':
       'frame':
         'x': 100
         'y': 216
@@ -416,7 +112,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    'digits/7.png':
+    '7':
       'frame':
         'x': 100
         'y': 258
@@ -432,7 +128,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    'digits/8.png':
+    '8':
       'frame':
         'x': 100
         'y': 300
@@ -448,10 +144,10 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    'digits/9.png':
+    '9':
       'frame':
-        'x': 100
-        'y': 342
+        'x': 328
+        'y': 170
         'w': 24
         'h': 40
       'rotated': false
@@ -464,55 +160,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    'obstacles/cactus.png':
-      'frame':
-        'x': 458
-        'y': 86
-        'w': 32
-        'h': 88
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 32
-        'h': 88
-      'sourceSize':
-        'w': 32
-        'h': 88
-    'obstacles/tree.png':
-      'frame':
-        'x': 376
-        'y': 128
-        'w': 64
-        'h': 108
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 64
-        'h': 108
-      'sourceSize':
-        'w': 64
-        'h': 108
-    'obstacles/wagon.png':
-      'frame':
-        'x': 100
-        'y': 446
-        'w': 88
-        'h': 96
-      'rotated': false
-      'trimmed': false
-      'spriteSourceSize':
-        'x': 0
-        'y': 0
-        'w': 88
-        'h': 96
-      'sourceSize':
-        'w': 88
-        'h': 96
-    'text/DRAW.png':
+    'DRAW':
       'frame':
         'x': 336
         'y': 2
@@ -528,7 +176,7 @@ atlas =
       'sourceSize':
         'w': 156
         'h': 40
-    'text/GAME.png':
+    'GAME':
       'frame':
         'x': 132
         'y': 128
@@ -544,7 +192,7 @@ atlas =
       'sourceSize':
         'w': 120
         'h': 40
-    'text/GET_READY.png':
+    'GET_READY':
       'frame':
         'x': 2
         'y': 44
@@ -560,7 +208,7 @@ atlas =
       'sourceSize':
         'w': 272
         'h': 40
-    'text/GOT_ME.png':
+    'GOT_ME':
       'frame':
         'x': 276
         'y': 44
@@ -576,7 +224,7 @@ atlas =
       'sourceSize':
         'w': 212
         'h': 40
-    'text/GUN_FIGHT.png':
+    'GUN_FIGHT':
       'frame':
         'x': 2
         'y': 86
@@ -592,7 +240,7 @@ atlas =
       'sourceSize':
         'w': 272
         'h': 40
-    'text/INSERT_COIN.png':
+    'INSERT_COIN':
       'frame':
         'x': 2
         'y': 2
@@ -608,7 +256,7 @@ atlas =
       'sourceSize':
         'w': 332
         'h': 40
-    'text/OVER.png':
+    'OVER':
       'frame':
         'x': 254
         'y': 128
@@ -624,6 +272,358 @@ atlas =
       'sourceSize':
         'w': 120
         'h': 40
+    'ammo':
+      'frame':
+        'x': 276
+        'y': 86
+        'w': 180
+        'h': 40
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 180
+        'h': 40
+      'sourceSize':
+        'w': 180
+        'h': 40
+    'bullet':
+      'frame':
+        'x': 490
+        'y': 44
+        'w': 8
+        'h': 8
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 8
+        'h': 8
+      'sourceSize':
+        'w': 8
+        'h': 8
+    'cactus':
+      'frame':
+        'x': 458
+        'y': 86
+        'w': 32
+        'h': 88
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 32
+        'h': 88
+      'sourceSize':
+        'w': 32
+        'h': 88
+    'dead/hit':
+      'frame':
+        'x': 198
+        'y': 584
+        'w': 96
+        'h': 132
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 132
+      'sourceSize':
+        'w': 96
+        'h': 132
+    'dead/rip':
+      'frame':
+        'x': 2
+        'y': 128
+        'w': 128
+        'h': 44
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 128
+        'h': 44
+      'sourceSize':
+        'w': 128
+        'h': 44
+    'cowboy/high/cross':
+      'frame':
+        'x': 132
+        'y': 170
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/high/one':
+      'frame':
+        'x': 2
+        'y': 174
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/high/two':
+      'frame':
+        'x': 2
+        'y': 312
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/low/cross':
+      'frame':
+        'x': 230
+        'y': 170
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/low/one':
+      'frame':
+        'x': 328
+        'y': 238
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/low/two':
+      'frame':
+        'x': 126
+        'y': 308
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/med/cross':
+      'frame':
+        'x': 224
+        'y': 308
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/med/one':
+      'frame':
+        'x': 322
+        'y': 376
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/med/two':
+      'frame':
+        'x': 100
+        'y': 446
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/medhigh/cross':
+      'frame':
+        'x': 2
+        'y': 450
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/medhigh/one':
+      'frame':
+        'x': 198
+        'y': 446
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/medhigh/two':
+      'frame':
+        'x': 296
+        'y': 514
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/medlow/cross':
+      'frame':
+        'x': 394
+        'y': 514
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/medlow/one':
+      'frame':
+        'x': 100
+        'y': 584
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'cowboy/medlow/two':
+      'frame':
+        'x': 2
+        'y': 588
+        'w': 96
+        'h': 136
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 96
+        'h': 136
+      'sourceSize':
+        'w': 96
+        'h': 136
+    'tree':
+      'frame':
+        'x': 376
+        'y': 128
+        'w': 64
+        'h': 108
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 64
+        'h': 108
+      'sourceSize':
+        'w': 64
+        'h': 108
+    'wagon':
+      'frame':
+        'x': 420
+        'y': 376
+        'w': 88
+        'h': 96
+      'rotated': false
+      'trimmed': false
+      'spriteSourceSize':
+        'x': 0
+        'y': 0
+        'w': 88
+        'h': 96
+      'sourceSize':
+        'w': 88
+        'h': 96
   'meta':
     'app': 'http://www.codeandweb.com/texturepacker'
     'version': '1.0'
@@ -633,6 +633,6 @@ atlas =
       'w': 512
       'h': 1024
     'scale': '1'
-    'smartupdate': '$TexturePacker:SmartUpdate:f05a3ac5007047e65c9c16cedce63cc7:4f348404f7af83f4f0e31193d6291c33:cbce6b53f0f49e0bf15173c25c41f876$'
+    'smartupdate': '$TexturePacker:SmartUpdate:106b7c2716c423559353f14b4413d243:ef307b0abd120798811a35db5e8606cf:cbce6b53f0f49e0bf15173c25c41f876$'
 
 module.exports = atlas

@@ -1,3 +1,4 @@
+Bullets = require './Bullets.coffee'
 StateMachine = require 'javascript-state-machine'
 
 # POSITION CONSTANTS
@@ -9,7 +10,7 @@ PLAYER_TWO_Y = 340
 # MOVEMENT CONSTANTS
 SPEED = 60
 DELTA = 34
-FRAMERATE = 6
+FRAMERATE = 7
 
 # CONTROL CONSTANTS
 PLAYER_ONE_CONTROLS =
@@ -33,10 +34,27 @@ PLAYER_TWO_CONTROLS =
 class Cowboy extends Phaser.Sprite
   constructor: (@game, @game_state, @is_player_one=true) ->
     key = 'atlas'
-    frame = 'cowboy/med/two.png'
+    frame = 'cowboy/med/two'
     x = if @is_player_one then PLAYER_ONE_X else PLAYER_TWO_X
     y = if @is_player_one then PLAYER_ONE_Y else PLAYER_TWO_Y
     super @game, x, y, key, frame
+
+    # enable arcade physics
+    @game.physics.enable @, Phaser.Physics.ARCADE
+    # save width and height of sprite body
+    @width = @body.width
+    @height = @body.height
+    # change body size for more accurate hit collision
+    @body.setSize 45, 136, 25, 0
+    @body.setSize 45, 136, -25, 0 if @is_player_one
+    # collide with world
+    @body.collideWorldBounds = true
+    # don't let bullet physics push ya back
+    @body.immovable = true
+    # set anchor to horizontal center so sprite flips around its middle
+    @anchor.setTo .5, 1
+    # flip sprite if is player two
+    @scale.x = if @is_player_one then -1 else 1
 
     # direction object
     @direction =
@@ -44,6 +62,11 @@ class Cowboy extends Phaser.Sprite
       down: false
       left: false
       right: false
+
+    # aim object
+    @aim =
+      up: false
+      down: false
 
     # movement vars
     @time = Date.now()
@@ -58,19 +81,8 @@ class Cowboy extends Phaser.Sprite
 
     # hud vars
     @wins = 0
-    @bullets = 6
-
-    # enable arcade physics
-    @game.physics.enable @, Phaser.Physics.ARCADE
-
-    # collide with world
-    @body.collideWorldBounds = true
-
-    # set anchor to horizontal center so sprite flips around its middle
-    @anchor.setTo .5, 1
-
-    # flip sprite if is player two
-    @scale.x = if @is_player_one then -1 else 1
+    @num_bullets = 6
+    @bullets = new Bullets @game, @game_state, @
 
     # setup controls
     @setupControls()
@@ -89,10 +101,16 @@ class Cowboy extends Phaser.Sprite
     # handle incremental movement
     current_time = Date.now()
     if current_time - @time > SPEED and !@dead
-      @body.y -= DELTA if @direction.up    and @body.y > 0
-      @body.x -= DELTA if @direction.left  and @body.x > 0
-      @body.x += DELTA if @direction.right and @body.x < @game.width - @body.width
-      @body.y += DELTA if @direction.down  and @body.y < @game.height - @body.height
+      @body.y -= DELTA if @direction.up    and @body.y > @game_state.ceiling.y
+      @body.y += DELTA if @direction.down  and @body.y < @game_state.floor.y - @body.height
+      if @is_player_one
+        @body.x -= DELTA if @direction.left  and @body.x > 0
+        @body.x += DELTA if @direction.right and @body.right < @game_state.left_wall.body.x
+      else
+        @body.x -= DELTA if @direction.left  and @body.x > @game_state.right_wall.body.x
+        @body.x += DELTA if @direction.right and @body.x < @game.width - @body.width
+      # @animate_aim_up()  if @aim.up
+      # @animate_aim_down() if @aim.down
       @time = current_time
 
     # is the player moving?
@@ -117,8 +135,18 @@ class Cowboy extends Phaser.Sprite
   move_right_off: -> @direction.right = false
   move_down_off:  -> @direction.down  = false
 
-  # handle aiming
-  aim_up: ->
+  aim_up:         -> @animate_aim_up()
+  aim_down:       -> @animate_aim_down()
+  # aim_up:         -> @aim.up          = true
+  # aim_down:       -> @aim.down        = true
+  # aim_up_off:     -> @aim.up          = false
+  # aim_down_off:   -> @aim.down        = false
+
+  # full ammo!
+  reload:         -> @num_bullets = 6
+
+  # handle aiming animations
+  animate_aim_up: ->
     current_frame = @animations.currentFrame.name
     @gun_pos_index += 1 if @gun_pos_index < @gun_pos.length - 1
 
@@ -130,7 +158,7 @@ class Cowboy extends Phaser.Sprite
     @animations.play "move-#{@gun_pos[@gun_pos_index]}"
     @animations.next @leg_pos_index
 
-  aim_down: ->
+  animate_aim_down: ->
     current_frame = @animations.currentFrame.name
     @gun_pos_index -= 1 if @gun_pos_index > 0
 
@@ -143,7 +171,10 @@ class Cowboy extends Phaser.Sprite
     @animations.next @leg_pos_index
 
   # shoot!
-  shoot: -> console.log 'shoot'
+  shoot: ->
+    if @num_bullets > 0
+      @num_bullets -= 1
+      @bullets.shoot()
 
   setupControls: ->
     # map control keys
@@ -151,8 +182,9 @@ class Cowboy extends Phaser.Sprite
     _.each controls, (key, action) =>
       input = @game_state.input.keyboard.addKey Phaser.Keyboard[key]
       input.onDown.add => @[action]()
-      input.onDown.add => @moving = true     if action.match 'move'
-      input.onUp.add => @["#{action}_off"]() if action.match 'move'
+      input.onDown.add => @moving = true if action.match 'move'
+      input.onUp.add   => @["#{action}_off"]() if action.match 'move'
+      # input.onUp.add   => @["#{action}_off"]()
 
   setupAnimations: ->
     # die animations
@@ -162,34 +194,34 @@ class Cowboy extends Phaser.Sprite
 
     # move animatinos
     @animations.add 'move-high', [
-      'cowboy/high/two.png'
-      'cowboy/high/one.png'
-      'cowboy/high/cross.png'
-      'cowboy/high/one.png'
+      'cowboy/high/two'
+      'cowboy/high/one'
+      'cowboy/high/cross'
+      'cowboy/high/one'
     ], FRAMERATE, true
     @animations.add 'move-low', [
-      'cowboy/low/two.png'
-      'cowboy/low/one.png'
-      'cowboy/low/cross.png'
-      'cowboy/low/one.png'
+      'cowboy/low/two'
+      'cowboy/low/one'
+      'cowboy/low/cross'
+      'cowboy/low/one'
     ], FRAMERATE, true
     @animations.add 'move-medhigh', [
-      'cowboy/medhigh/two.png'
-      'cowboy/medhigh/one.png'
-      'cowboy/medhigh/cross.png'
-      'cowboy/medhigh/one.png'
+      'cowboy/medhigh/two'
+      'cowboy/medhigh/one'
+      'cowboy/medhigh/cross'
+      'cowboy/medhigh/one'
     ], FRAMERATE, true
     @animations.add 'move-medlow', [
-      'cowboy/medlow/two.png'
-      'cowboy/medlow/one.png'
-      'cowboy/medlow/cross.png'
-      'cowboy/medlow/one.png'
+      'cowboy/medlow/two'
+      'cowboy/medlow/one'
+      'cowboy/medlow/cross'
+      'cowboy/medlow/one'
     ], FRAMERATE, true
     @animations.add 'move-med', [
-      'cowboy/med/two.png'
-      'cowboy/med/one.png'
-      'cowboy/med/cross.png'
-      'cowboy/med/one.png'
+      'cowboy/med/two'
+      'cowboy/med/one'
+      'cowboy/med/cross'
+      'cowboy/med/one'
     ], FRAMERATE, true
 
   createStateMachine: ->
