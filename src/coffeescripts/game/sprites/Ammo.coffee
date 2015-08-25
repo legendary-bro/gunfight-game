@@ -6,15 +6,15 @@ class Ammo extends Phaser.Sprite
     y = @game.height - 45
     super @game, x, y, key, frame
 
+    # clean up
+    @game.add.existing @
+
     # draw crop rect
     @cropRect = @game.add.graphics 0, 0
     @cropRect.lineStyle 0
-    @cropRect.beginFill "0xFF0000"
+    @cropRect.beginFill "0x000000"
     @cropRect.drawRect x, y, 0, @height
     @cropRect.endFill()
-
-    # clean up
-    @game.add.existing @
 
     return @
 
@@ -26,7 +26,7 @@ class Ammo extends Phaser.Sprite
 
   drawRect: (width) ->
     @cropRect.lineStyle 0
-    @cropRect.beginFill "0xFF0000"
+    @cropRect.beginFill "0x000000"
     @cropRect.drawRect @x, @y, width, @height
     @cropRect.endFill()
 

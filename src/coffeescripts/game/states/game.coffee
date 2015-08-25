@@ -14,6 +14,9 @@ Cowboy = require '../sprites/Cowboy.coffee'
 # Tree   = require '../sprites/Tree.coffee'
 # Wagon  = require '../sprites/Wagon.coffee'
 
+STARTING_TIME = 70
+NO_AMMO_COUNTDOWN = 10
+
 class Game
   constructor: ->
 
@@ -21,10 +24,13 @@ class Game
     # create the bounds
     @ceiling    = new Ceiling @game, 45
     @floor      = new Floor @game, -45
+    @left_wall_outer = new Wall @game, 92
     @left_wall  = new Wall @game, @game.world.width / 2 - WALL_OFFSET
+    @right_wall_outer = new Wall @game, 996
     @right_wall = new Wall @game, @game.world.width / 2  + WALL_OFFSET
 
     # setup the hud
+
 
     # create the players
     @player_one = new Cowboy @game, @
@@ -40,6 +46,8 @@ class Game
     @start()
 
   start: ->
+    # intro the level, place terrain on the map
+    @setupLevel()
 
   update: ->
     # set bounce surfaces for bullets
@@ -47,9 +55,16 @@ class Game
 
     # set player, bullet collisions
     @game.physics.arcade.collide @bullets, @players, (player, bullet) =>
-      # kill all bullets
+      # disable inputs
+      # @input
+      # kill all bullets in the field
       b.kill() for b in @player_one.bullets.children
       b.kill() for b in @player_two.bullets.children
+      # increase score of winning player
+      bullet.player.idle()
+      bullet.player.wins += 1
+      # increase game's level
+      @game.level += 1
       # trigger player death
       player.die()
 
@@ -65,5 +80,8 @@ class Game
       @game.debug.body @player_two.bullets
 
   setupLevel: ->
+    level_num = @game.level
+    level = @game.constants.LEVELS["#{level_num}"]
+    console.log level
 
 module.exports = Game

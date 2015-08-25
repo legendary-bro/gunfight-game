@@ -1,5 +1,6 @@
 Bullets = require './Bullets.coffee'
 Ammo = require './Ammo.coffee'
+Text = require './Text.coffee'
 StateMachine = require 'javascript-state-machine'
 
 # POSITION CONSTANTS
@@ -19,8 +20,8 @@ PLAYER_ONE_CONTROLS =
   move_down: 'S'
   move_left: 'A'
   move_right: 'D'
-  aim_up: 'E'
-  aim_down: 'C'
+  aim_up: 'Q'
+  aim_down: 'E'
   shoot: 'F'
 
 PLAYER_TWO_CONTROLS =
@@ -28,8 +29,8 @@ PLAYER_TWO_CONTROLS =
   move_down: 'K'
   move_left: 'J'
   move_right: 'L'
-  aim_up: 'U'
-  aim_down: 'N'
+  aim_up: 'O'
+  aim_down: 'U'
   shoot: 'H'
 
 class Cowboy extends Phaser.Sprite
@@ -86,6 +87,9 @@ class Cowboy extends Phaser.Sprite
     @bullets = new Bullets @game, @game_state, @
     @ammo = new Ammo @game, @game_state, @
 
+    # text for die state
+    @text = new Text @game, 'GOT_ME'
+
     # setup controls
     @setupControls()
     # setup animations
@@ -101,26 +105,40 @@ class Cowboy extends Phaser.Sprite
 
   update: ->
     # handle incremental movement
-    current_time = Date.now()
-    if current_time - @time > SPEED and !@dead
-      @body.y -= DELTA if @direction.up    and @body.y > @game_state.ceiling.y
-      @body.y += DELTA if @direction.down  and @body.y < @game_state.floor.y - @body.height
-      if @is_player_one
-        @body.x -= DELTA if @direction.left  and @body.x > 0
-        @body.x += DELTA if @direction.right and @body.right < @game_state.left_wall.body.x
-      else
-        @body.x -= DELTA if @direction.left  and @body.x > @game_state.right_wall.body.x
-        @body.x += DELTA if @direction.right and @body.x < @game.width - @body.width
-      # @animate_aim_up()  if @aim.up
-      # @animate_aim_down() if @aim.down
-      @time = current_time
+    if @state.current != 'dying'
+      current_time = Date.now()
+      if current_time - @time > SPEED
+        @body.y -= DELTA if @direction.up    and @body.y > @game_state.ceiling.y
+        @body.y += DELTA if @direction.down  and @body.y < @game_state.floor.y - @body.height
+        if @is_player_one
+          @body.x -= DELTA if @direction.left  and @body.x > @game_state.left_wall_outer.body.x
+          @body.x += DELTA if @direction.right and @body.right < @game_state.left_wall.body.x
+        else
+          @body.x -= DELTA if @direction.left  and @body.x > @game_state.right_wall.body.x
+          @body.x += DELTA if @direction.right and @body.right < @game_state.right_wall_outer.body.x
+        # @animate_aim_up()  if @aim.up
+        # @animate_aim_down() if @aim.down
+        @time = current_time
 
-    # is the player moving?
-    @moving = false unless @direction.up || @direction.down || @direction.left || @direction.right
+      # is the player moving?
+      @moving = false unless @direction.up || @direction.down || @direction.left || @direction.right
 
-    # trigger move animation
-    @move() if  @moving and @state.current != 'moving' and !@dead
-    @idle() if !@moving and @state.current != 'idle'   and !@dead
+      # trigger move animation
+      @move() if  @moving and @state.current != 'moving'
+      @idle() if !@moving and @state.current != 'idle'
+
+    # handle dying sequence
+    else
+      # show "GOT ME!" text
+      current_frame = @animations.currentFrame.name
+      if current_frame is 'cowboy/dead/rip' and !@text.visible
+        x = if @is_player_one then @body.right - @text.width / 2 else @body.x - @text.width / 2
+        y = @body.y
+        @text.place x, y
+        @text.show()
+
+      # reset the players
+
 
   # change state
   move:           -> @state._move()
@@ -147,7 +165,7 @@ class Cowboy extends Phaser.Sprite
   # full ammo!
   reload: ->
     @num_bullets = 6
-    @ammo.reload
+    @ammo.reload()
 
   # handle aiming animations
   animate_aim_up: ->
@@ -192,9 +210,17 @@ class Cowboy extends Phaser.Sprite
       # input.onUp.add   => @["#{action}_off"]()
 
   setupAnimations: ->
-    # die animations
+    # die animation
     @animations.add 'die', [
-
+      'cowboy/dead/hit'
+      'cowboy/dead/hit'
+      'cowboy/dead/hit'
+      'cowboy/dead/hit'
+      'cowboy/dead/hit'
+      'cowboy/dead/hit'
+      'cowboy/dead/rip'
+      'cowboy/dead/rip'
+      'cowboy/dead/rip'
     ], FRAMERATE, false
 
     # move animatinos
@@ -239,6 +265,6 @@ class Cowboy extends Phaser.Sprite
       callbacks:
         on_idle: (event, from, to) => @animations.stop null, true
         on_move: (event, from, to) => @play "move-#{@gun_pos[@gun_pos_index]}"
-        on_die: (event, from, to) => @dead = false
+        on_die: (event, from, to)  => @play "die"
 
 module.exports = Cowboy

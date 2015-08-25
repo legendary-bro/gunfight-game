@@ -160,7 +160,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    'DRAW':
+    'text/DRAW':
       'frame':
         'x': 336
         'y': 2
@@ -176,7 +176,7 @@ atlas =
       'sourceSize':
         'w': 156
         'h': 40
-    'GAME':
+    'text/GAME':
       'frame':
         'x': 132
         'y': 128
@@ -192,7 +192,7 @@ atlas =
       'sourceSize':
         'w': 120
         'h': 40
-    'GET_READY':
+    'text/GET_READY':
       'frame':
         'x': 2
         'y': 44
@@ -208,7 +208,7 @@ atlas =
       'sourceSize':
         'w': 272
         'h': 40
-    'GOT_ME':
+    'text/GOT_ME':
       'frame':
         'x': 276
         'y': 44
@@ -224,7 +224,7 @@ atlas =
       'sourceSize':
         'w': 212
         'h': 40
-    'GUN_FIGHT':
+    'text/GUN_FIGHT':
       'frame':
         'x': 2
         'y': 86
@@ -240,7 +240,7 @@ atlas =
       'sourceSize':
         'w': 272
         'h': 40
-    'INSERT_COIN':
+    'text/INSERT_COIN':
       'frame':
         'x': 2
         'y': 2
@@ -256,7 +256,7 @@ atlas =
       'sourceSize':
         'w': 332
         'h': 40
-    'OVER':
+    'text/OVER':
       'frame':
         'x': 254
         'y': 128
@@ -304,7 +304,7 @@ atlas =
       'sourceSize':
         'w': 8
         'h': 8
-    'cactus':
+    'terrain/cactus':
       'frame':
         'x': 458
         'y': 86
@@ -320,7 +320,7 @@ atlas =
       'sourceSize':
         'w': 32
         'h': 88
-    'dead/hit':
+    'cowboy/dead/hit':
       'frame':
         'x': 198
         'y': 584
@@ -336,7 +336,7 @@ atlas =
       'sourceSize':
         'w': 96
         'h': 132
-    'dead/rip':
+    'cowboy/dead/rip':
       'frame':
         'x': 2
         'y': 128
@@ -592,7 +592,7 @@ atlas =
       'sourceSize':
         'w': 96
         'h': 136
-    'tree':
+    'terrain/tree':
       'frame':
         'x': 376
         'y': 128
