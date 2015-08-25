@@ -6,12 +6,10 @@ WALL_OFFSET = 275
 
 # HUD
 # Timer  = require '../sprites/Timer.coffee'
-# Ammo   = require '../sprites/Ammo.coffee'
 # Score  = require '../sprites/Score.coffee'
 
 # SPRITES
 Cowboy = require '../sprites/Cowboy.coffee'
-# Bullet = require '../sprites/Bullet.coffee'
 # Cactus = require '../sprites/Cactus.coffee'
 # Tree   = require '../sprites/Tree.coffee'
 # Wagon  = require '../sprites/Wagon.coffee'
@@ -21,8 +19,8 @@ class Game
 
   create: ->
     # create the bounds
-    @ceiling    = new Ceiling @game, 150
-    @floor      = new Floor @game, -150
+    @ceiling    = new Ceiling @game, 45
+    @floor      = new Floor @game, -45
     @left_wall  = new Wall @game, @game.world.width / 2 - WALL_OFFSET
     @right_wall = new Wall @game, @game.world.width / 2  + WALL_OFFSET
 

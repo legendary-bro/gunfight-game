@@ -1,15 +1,16 @@
 Bullets = require './Bullets.coffee'
+Ammo = require './Ammo.coffee'
 StateMachine = require 'javascript-state-machine'
 
 # POSITION CONSTANTS
-PLAYER_ONE_X = 192
-PLAYER_ONE_Y = 340
-PLAYER_TWO_X = 896
-PLAYER_TWO_Y = 340
+PLAYER_ONE_X = 200
+PLAYER_ONE_Y = 450
+PLAYER_TWO_X = 888
+PLAYER_TWO_Y = 450
 
 # MOVEMENT CONSTANTS
 SPEED = 60
-DELTA = 34
+DELTA = 15
 FRAMERATE = 7
 
 # CONTROL CONSTANTS
@@ -83,6 +84,7 @@ class Cowboy extends Phaser.Sprite
     @wins = 0
     @num_bullets = 6
     @bullets = new Bullets @game, @game_state, @
+    @ammo = new Ammo @game, @game_state, @
 
     # setup controls
     @setupControls()
@@ -143,7 +145,9 @@ class Cowboy extends Phaser.Sprite
   # aim_down_off:   -> @aim.down        = false
 
   # full ammo!
-  reload:         -> @num_bullets = 6
+  reload: ->
+    @num_bullets = 6
+    @ammo.reload
 
   # handle aiming animations
   animate_aim_up: ->
@@ -174,6 +178,7 @@ class Cowboy extends Phaser.Sprite
   shoot: ->
     if @num_bullets > 0
       @num_bullets -= 1
+      @ammo.crop()
       @bullets.shoot()
 
   setupControls: ->
