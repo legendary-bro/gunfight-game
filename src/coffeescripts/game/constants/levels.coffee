@@ -1,60 +1,38 @@
 levels = {
   1:
     wagon: false
-    terrain: [
-      { key: 'cactus', x: 0, y: 0 }
-    ]
+    num_cactus: 1
   2:
     wagon: false
-    terrain: [
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-    ]
+    num_cactus: 2
   3:
     wagon: false
-    terrain: [
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-    ]
+    num_cactus: 3
   4:
     wagon: false
-    terrain: [
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-    ]
+    num_cactus: 4
   5:
     wagon: true
-    terrain: [
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-    ]
+    num_cactus: 4
   6:
     wagon: true
-    terrain: [
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-    ]
+    num_cactus: 5
   7:
     wagon: true
-    terrain: [
-      { key: 'tree', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-    ]
+    num_cactus: 2
+    num_tree: 1
   8:
     wagon: true
-    terrain: [
-      { key: 'tree', x: 0, y: 0 }
-      { key: 'cactus', x: 0, y: 0 }
-      { key: 'tree', x: 0, y: 0 }
-    ]
+    num_cactus: 1
+    num_tree: 2
+  9:
+    wagon: true
+    num_cactus: 2
+    num_tree: 2
+  10:
+    wagon: true
+    num_cactus: 3
+    num_tree: 2
 }
 
 module.exports = levels

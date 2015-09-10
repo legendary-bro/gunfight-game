@@ -9,12 +9,8 @@ class Ammo extends Phaser.Sprite
     # clean up
     @game.add.existing @
 
-    # draw crop rect
-    @cropRect = @game.add.graphics 0, 0
-    @cropRect.lineStyle 0
-    @cropRect.beginFill "0x000000"
-    @cropRect.drawRect x, y, 0, @height
-    @cropRect.endFill()
+    # add crop rect
+    @cropRect = @game.add.graphics()
 
     return @
 

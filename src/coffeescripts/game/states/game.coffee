@@ -10,12 +10,11 @@ WALL_OFFSET = 275
 
 # SPRITES
 Cowboy = require '../sprites/Cowboy.coffee'
-# Cactus = require '../sprites/Cactus.coffee'
-# Tree   = require '../sprites/Tree.coffee'
+TerrainGroup = require '../sprites/TerrainGroup.coffee'
 # Wagon  = require '../sprites/Wagon.coffee'
 
-STARTING_TIME = 70
-NO_AMMO_COUNTDOWN = 10
+STARTING_TIME = 70 #seconds
+NO_AMMO_COUNTDOWN = 10 #seconds
 
 class Game
   constructor: ->
@@ -41,6 +40,7 @@ class Game
     @walls    = [ @left_wall, @right_wall ]
     @surfaces = [ @ceiling, @floor ]
     @players  = [ @player_one, @player_two ]
+    @terrain = undefined # instantiate in setupLevel()
 
     # start the game
     @start()
@@ -68,6 +68,12 @@ class Game
       # trigger player death
       player.die()
 
+    # set terrain, bullet collisions
+    @game.physics.arcade.collide @bullets, @terrain, (bullet, terrain) =>
+      collision_y = bullet.y + bullet.height
+      bullet.kill()
+      terrain.deform collision_y
+
   render: ->
     if @game.debugMode
       @game.debug.body @ceiling
@@ -78,10 +84,11 @@ class Game
       @game.debug.body @player_two
       @game.debug.body @player_one.bullets
       @game.debug.body @player_two.bullets
+      # @game.debug.body @terrain.children[0]
 
   setupLevel: ->
     level_num = @game.level
     level = @game.constants.LEVELS["#{level_num}"]
-    console.log level
+    @terrain = new TerrainGroup @game, @, level
 
 module.exports = Game
