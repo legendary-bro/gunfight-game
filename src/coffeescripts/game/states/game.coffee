@@ -49,6 +49,9 @@ class Game
   start: ->
     # intro the level, place terrain on the map
     @setupLevel()
+    # enable movement
+    @player_one.enableInput()
+    @player_two.enableInput()
 
   update: ->
     # set bounce surfaces for bullets
@@ -57,10 +60,11 @@ class Game
     # set player, bullet collisions
     @game.physics.arcade.collide @bullets, @players, (player, bullet) =>
       # disable inputs
-      # @input
+      @player_one.disableInput()
+      @player_two.disableInput()
       # kill all bullets in the field
-      b.kill() for b in @player_one.bullets.children
-      b.kill() for b in @player_two.bullets.children
+      @player_one.bullets.forEachAlive (b) -> b.kill()
+      @player_two.bullets.forEachAlive (b) -> b.kill()
       # increase score of winning player
       bullet.player.idle()
       bullet.player.wins += 1
@@ -75,20 +79,26 @@ class Game
       bullet.kill()
       terrain.deform collision_y
 
+    # set wagon, bullet collisions
+    @game.physics.arcade.collide @bullets, @wagon, (wagon, bullet) =>
+      bullet.kill()
+
   render: ->
     if @game.debugMode
       @game.debug.body @ceiling
       @game.debug.body @floor
       @game.debug.body @left_wall
       @game.debug.body @right_wall
-      @game.debug.body @player_one
-      @game.debug.body @player_two
-      @game.debug.body @player_one.bullets
-      @game.debug.body @player_two.bullets
+      # @game.debug.body @player_one
+      # @game.debug.body @player_two
+      # @game.debug.body @player_one.bullets
+      # @game.debug.body @player_two.bullets
+      # @game.debug.body @wagon
 
   setupLevel: ->
     level_num = @game.level
     level = @game.constants.LEVELS["#{level_num}"]
     @terrain = new TerrainGroup @game, @, level
+    @wagon.start() if level.wagon
 
 module.exports = Game

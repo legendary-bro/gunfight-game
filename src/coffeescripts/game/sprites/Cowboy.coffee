@@ -5,9 +5,9 @@ StateMachine = require 'javascript-state-machine'
 
 # POSITION CONSTANTS
 PLAYER_ONE_X = 200
-PLAYER_ONE_Y = 450
+PLAYER_ONE_Y = 495
 PLAYER_TWO_X = 888
-PLAYER_TWO_Y = 450
+PLAYER_TWO_Y = 495
 
 # MOVEMENT CONSTANTS
 SPEED = 60
@@ -74,6 +74,7 @@ class Cowboy extends Phaser.Sprite
     @time = Date.now()
     @moving = false
     @dead = false
+    @input_disabled = true
 
     # frame vars
     @gun_pos = ['low','medlow','med','medhigh','high']
@@ -105,7 +106,7 @@ class Cowboy extends Phaser.Sprite
 
   update: ->
     # handle incremental movement
-    if @state.current != 'dying'
+    if @state.current != 'dying' and !@input_disabled
       current_time = Date.now()
       if current_time - @time > SPEED
         @body.y -= DELTA if @direction.up    and @body.y > @game_state.ceiling.y
@@ -139,6 +140,10 @@ class Cowboy extends Phaser.Sprite
 
       # reset the players
 
+  # disable / enable movement
+  enableInput: -> @input_disabled = false
+  disableInput: -> @input_disabled = true
+  toggleInput: -> @input_disabled = !@input_disabled
 
   # change state
   move:           -> @state._move()
@@ -194,7 +199,7 @@ class Cowboy extends Phaser.Sprite
 
   # shoot!
   shoot: ->
-    if @num_bullets > 0
+    if @num_bullets > 0 and !@input_disabled
       @num_bullets -= 1
       @ammo.crop()
       @bullets.shoot()

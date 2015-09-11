@@ -1,3 +1,0 @@
-sprites = {}
-
-module.exports = sprites 

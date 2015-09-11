@@ -6,21 +6,21 @@ Tree = require './Tree.coffee'
 # tree width, height = 64, 108
 
 CACTUS_POSITIONS =
-  top_left: { x: 0, y: 0 }
-  top_right: { x: 0, y: 0 }
-  center_left: { x: 500, y: 300 }
-  center: { x: 528, y: 300 }
-  center_right: { x: 600, y: 300 }
-  bottom_left: { x: 0, y: 0 }
-  bottom_right: { x: 0, y: 0 }
+  top_left: { x: 328, y: 100 }
+  top_right: { x: 714, y: 100 }
+  center_left: { x: 436, y: 350 }
+  center: { x: 528, y: 350 }
+  center_right: { x: 614, y: 350 }
+  bottom_left: { x: 328, y: 600 }
+  bottom_right: { x: 714, y: 600 }
 
-POSITIONS =
-  top_left: { x: 0, y: 0 }
-  top_right: { x: 0, y: 0 }
-  bottom_left: { x: 0, y: 0 }
-  bottom_right: { x: 0, y: 0 }
+TREE_POSITIONS =
+  top_left: { x: 328, y: 150 }
+  top_right: { x: 714, y: 150 }
+  bottom_left: { x: 328, y: 550 }
+  bottom_right: { x: 714, y: 550 }
 
-POSITION_KEYS = [
+POSITIONS = [
   "top_left"
   "top_right"
   "bottom_left"
@@ -47,10 +47,8 @@ class TerrainGroup extends Phaser.Group
     @num_cactus = @level_data.num_cactus
     @num_tree = @level_data.num_tree
     # determine positions to pluck from
-    @positions = POSITION_KEYS
-    _.shuffle @positions
+    @positions = _.shuffle POSITIONS
     @cactus_positions = if @is_wagon then ['center_left', 'center_right'] else ['center']
-    _.shuffle @cactus_positions
     # add terrain children to the group
     @addCactus() for cactus in [0...@num_cactus]
     @addTree()   for tree in [0...@num_tree]
@@ -72,10 +70,10 @@ class TerrainGroup extends Phaser.Group
           pos = CACTUS_POSITIONS[pos_key]
         else
           pos_key = @positions.pop()
-          pos = POSITIONS[pos_key]
+          pos = CACTUS_POSITIONS[pos_key]
       when 'tree'
         pos_key = @positions.pop()
-        pos = POSITIONS[pos_key]
+        pos = TREE_POSITIONS[pos_key]
     return pos
 
 module.exports = TerrainGroup

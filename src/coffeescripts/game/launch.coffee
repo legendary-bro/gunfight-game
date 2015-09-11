@@ -42,7 +42,6 @@ launch = (cdn="/", version="?v=0.0.0") ->
   # constants
   game.constants =
     STATES: ['boot', 'preload', 'intro', 'game', 'reset']
-    SPRITES: require 'coffeescripts/game/constants/sprites'
     LEVELS: require 'coffeescripts/game/constants/levels'
     SFX: require 'coffeescripts/game/constants/sfx'
 

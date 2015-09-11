@@ -1,11 +1,7 @@
 levels = {
-  # 1:
-  #   wagon: false
-  #   num_cactus: 1
   1:
-    wagon: true
-    num_cactus: 3
-    num_tree: 2
+    wagon: false
+    num_cactus: 1
   2:
     wagon: false
     num_cactus: 2
@@ -37,6 +33,14 @@ levels = {
     wagon: true
     num_cactus: 3
     num_tree: 2
+  11:
+    wagon: true
+    num_cactus: 4
+    num_tree: 2
+  12:
+    wagon: true
+    num_cactus: 3
+    num_tree: 3
 }
 
 module.exports = levels
