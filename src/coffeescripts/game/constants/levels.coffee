@@ -1,7 +1,11 @@
 levels = {
+  # 1:
+  #   wagon: false
+  #   num_cactus: 1
   1:
-    wagon: false
-    num_cactus: 1
+    wagon: true
+    num_cactus: 3
+    num_tree: 2
   2:
     wagon: false
     num_cactus: 2

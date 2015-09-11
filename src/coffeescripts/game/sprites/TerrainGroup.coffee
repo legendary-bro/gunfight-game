@@ -8,19 +8,19 @@ Tree = require './Tree.coffee'
 CACTUS_POSITIONS =
   top_left: { x: 0, y: 0 }
   top_right: { x: 0, y: 0 }
-  center_left: { x: 0, y: 0 }
+  center_left: { x: 500, y: 300 }
   center: { x: 528, y: 300 }
-  center_right: { x: 0, y: 0 }
+  center_right: { x: 600, y: 300 }
   bottom_left: { x: 0, y: 0 }
   bottom_right: { x: 0, y: 0 }
 
-TREE_POSITIONS =
+POSITIONS =
   top_left: { x: 0, y: 0 }
   top_right: { x: 0, y: 0 }
   bottom_left: { x: 0, y: 0 }
   bottom_right: { x: 0, y: 0 }
 
-POSITIONS = [
+POSITION_KEYS = [
   "top_left"
   "top_right"
   "bottom_left"
@@ -47,7 +47,7 @@ class TerrainGroup extends Phaser.Group
     @num_cactus = @level_data.num_cactus
     @num_tree = @level_data.num_tree
     # determine positions to pluck from
-    @positions = POSITIONS
+    @positions = POSITION_KEYS
     _.shuffle @positions
     @cactus_positions = if @is_wagon then ['center_left', 'center_right'] else ['center']
     _.shuffle @cactus_positions

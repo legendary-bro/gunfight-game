@@ -11,7 +11,7 @@ WALL_OFFSET = 275
 # SPRITES
 Cowboy = require '../sprites/Cowboy.coffee'
 TerrainGroup = require '../sprites/TerrainGroup.coffee'
-# Wagon  = require '../sprites/Wagon.coffee'
+Wagon  = require '../sprites/Wagon.coffee'
 
 STARTING_TIME = 70 #seconds
 NO_AMMO_COUNTDOWN = 10 #seconds
@@ -40,6 +40,7 @@ class Game
     @walls    = [ @left_wall, @right_wall ]
     @surfaces = [ @ceiling, @floor ]
     @players  = [ @player_one, @player_two ]
+    @wagon = new Wagon @game, @game_state
     @terrain = undefined # instantiate in setupLevel()
 
     # start the game
@@ -84,7 +85,6 @@ class Game
       @game.debug.body @player_two
       @game.debug.body @player_one.bullets
       @game.debug.body @player_two.bullets
-      # @game.debug.body @terrain.children[0]
 
   setupLevel: ->
     level_num = @game.level
