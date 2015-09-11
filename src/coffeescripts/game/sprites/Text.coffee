@@ -1,13 +1,14 @@
+# DRAW, GAME, GET_READY, GOT_ME, GUN_FIGHT, INSERT_COIN, OVER
+
 class Text extends Phaser.Sprite
-  constructor: (@game, frame, x=0, y=0) ->
+  constructor: (@game, @game_state, frame, x=0, y=0) ->
     key = 'atlas'
-    super @game, x, y, key, "text/#{frame}"
+    frame = String frame
+    super @game, x, y, key, "text/#{frame.replace(' ','_').toUpperCase()}"
 
     # clean up
     @game.add.existing @
     @hide()
-
-    return @
 
   place: (x, y) ->
     @x = x

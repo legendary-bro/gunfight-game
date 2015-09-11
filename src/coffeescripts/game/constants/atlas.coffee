@@ -1,6 +1,6 @@
 atlas =
   'frames':
-    '0':
+    'text/0':
       'frame':
         'x': 442
         'y': 176
@@ -16,7 +16,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    '1':
+    'text/1':
       'frame':
         'x': 494
         'y': 2
@@ -32,7 +32,7 @@ atlas =
       'sourceSize':
         'w': 16
         'h': 40
-    '2':
+    'text/2':
       'frame':
         'x': 468
         'y': 176
@@ -48,7 +48,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    '3':
+    'text/3':
       'frame':
         'x': 442
         'y': 218
@@ -64,7 +64,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    '4':
+    'text/4':
       'frame':
         'x': 468
         'y': 218
@@ -80,7 +80,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    '5':
+    'text/5':
       'frame':
         'x': 100
         'y': 174
@@ -96,7 +96,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    '6':
+    'text/6':
       'frame':
         'x': 100
         'y': 216
@@ -112,7 +112,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    '7':
+    'text/7':
       'frame':
         'x': 100
         'y': 258
@@ -128,7 +128,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    '8':
+    'text/8':
       'frame':
         'x': 100
         'y': 300
@@ -144,7 +144,7 @@ atlas =
       'sourceSize':
         'w': 24
         'h': 40
-    '9':
+    'text/9':
       'frame':
         'x': 328
         'y': 170

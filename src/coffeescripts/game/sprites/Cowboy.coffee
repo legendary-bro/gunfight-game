@@ -89,7 +89,7 @@ class Cowboy extends Phaser.Sprite
     @ammo = new Ammo @game, @game_state, @
 
     # text for die state
-    @text = new Text @game, 'GOT_ME'
+    @text = new Text @game, @game_state, 'got me'
 
     # setup controls
     @setupControls()

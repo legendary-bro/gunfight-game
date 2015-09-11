@@ -12,7 +12,7 @@ module.exports = ->
 	# 	sound: 'Basso'
 	# ).apply this, args
 
-	err = new gutil.PluginError('test', 'something broke', {showStack: true})
+	err = new gutil.PluginError('test', 'something broke', {showStack: false})
 	console.log arguments[0]
 	console.error "[gulp]".red, "Error:".red, arguments[0]
 

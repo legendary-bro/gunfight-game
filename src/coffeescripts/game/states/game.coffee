@@ -5,8 +5,8 @@ Wall     = require '../sprites/Wall.coffee'
 WALL_OFFSET = 275
 
 # HUD
-# Timer  = require '../sprites/Timer.coffee'
-# Score  = require '../sprites/Score.coffee'
+Text = require '../sprites/Text.coffee'
+Integer = require '../sprites/Integer.coffee'
 
 # SPRITES
 Cowboy = require '../sprites/Cowboy.coffee'
@@ -28,8 +28,19 @@ class Game
     @right_wall_outer = new Wall @game, 996
     @right_wall = new Wall @game, @game.world.width / 2  + WALL_OFFSET
 
-    # setup the hud
+    # setup the text
+    @text_gun_fight =   new Text @game, @, 'gun fight', 408, 250
+    @text_get_ready =   new Text @game, @, 'get ready', 408, 250
+    @text_insert_coin = new Text @game, @, 'insert coin', 700, 771
+    @text_draw =        new Text @game, @, 'draw', 466, 250
+    @text_game =        new Text @game, @, 'game', 370, 5
+    @text_over =        new Text @game, @, 'over', 599, 5
 
+    # setup the hud
+    @hud_score_player_one = new Integer @game, @, 0, 200, 5
+    @hud_score_player_two = new Integer @game, @, 0, 830, 5
+    @hud_time             = new Integer @game, @, 70, 644, 5
+    @hud_countdown        = new Integer @game, @, 10, 400, 5
 
     # create the players
     @player_one = new Cowboy @game, @
@@ -89,8 +100,8 @@ class Game
       @game.debug.body @floor
       @game.debug.body @left_wall
       @game.debug.body @right_wall
-      # @game.debug.body @player_one
-      # @game.debug.body @player_two
+      @game.debug.body @player_one
+      @game.debug.body @player_two
       # @game.debug.body @player_one.bullets
       # @game.debug.body @player_two.bullets
       # @game.debug.body @wagon
