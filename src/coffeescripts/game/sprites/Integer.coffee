@@ -14,13 +14,7 @@ class Integer
     @right_digits = {}
     @right_digits[d] = new Digit @game, @game_state, d, @x + 32, @y for d in [0..9]
 
-    # handle single digit start value
-    if @start_value < 10
-      @left_digit = @left_digits[0]
-      @right_digit = @right_digits[String(@value).split('')[0]]
-    else
-      @left_digit = @left_digits[String(@value).split('')[0]]
-      @right_digit = @right_digits[String(@value).split('')[1]]
+    @setValue()
 
     # @show()
 
@@ -40,5 +34,21 @@ class Integer
   show: ->
     @showLeft()
     @showRight()
+
+  setValue: (val=@start_value) ->
+    @value = val
+    # handle single digit start value
+    if @value < 10
+      @left_digit = @left_digits[0]
+      @right_digit = @right_digits[String(@value).split('')[0]]
+    else
+      @left_digit = @left_digits[String(@value).split('')[0]]
+      @right_digit = @right_digits[String(@value).split('')[1]]
+
+  resetValue: (val) -> setValue(@start_value)
+  inc: (n=1) -> increment(n)
+  dec: (n=1) -> decrement(n)
+  increment: (n=1) -> setValue(@value + n)
+  decrement: (n=1) -> setValue(@value - n)
 
 module.exports = Integer
