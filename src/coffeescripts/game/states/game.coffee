@@ -39,8 +39,14 @@ class Game
     # setup the hud
     @hud_score_player_one = new Integer @game, @, 0, 200, 5
     @hud_score_player_two = new Integer @game, @, 0, 830, 5
-    @hud_time             = new Integer @game, @, 70, 644, 5
+    @hud_timer            = new Integer @game, @, 70, 644, 5
     @hud_countdown        = new Integer @game, @, 10, 400, 5
+
+    # timers
+    @timer = @game.time.create(false)
+    @countdown = @game.time.create(false)
+    @game.time.events.loop(1000, @updateTimer, @).autoDestroy = true
+    # @game.time.events.add(1000, @updateCountdown, @).autoDestroy = true
 
     # create the players
     @player_one = new Cowboy @game, @
@@ -63,6 +69,9 @@ class Game
     # enable movement
     @player_one.enableInput()
     @player_two.enableInput()
+    # start timer
+    @hud_timer.show()
+    @timer.start()
 
   update: ->
     # set bounce surfaces for bullets
@@ -106,10 +115,26 @@ class Game
       # @game.debug.body @player_two.bullets
       # @game.debug.body @wagon
 
+  updateTimer: -> @hud_timer.dec() if @hud_timer.value > 0
+  updateCountdown: -> @hud_countdown.dec() if @hud_countdown.value > 0
+
   setupLevel: ->
     level_num = @game.level
     level = @game.constants.LEVELS["#{level_num}"]
     @terrain = new TerrainGroup @game, @, level
+    @showHud()
     @wagon.start() if level.wagon
+
+  showHud: ->
+    @hud_score_player_one.show()
+    @hud_score_player_two.show()
+    @hud_timer.show()
+    @hud_countdown.show()
+
+  hideHud: ->
+    @hud_score_player_one.hide()
+    @hud_score_player_two.hide()
+    @hud_timer.hide()
+    @hud_countdown.hide()
 
 module.exports = Game
