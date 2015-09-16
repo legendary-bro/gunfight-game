@@ -53,7 +53,7 @@ class Integer
       @right_digit = @right_digits[String(@value).split('')[1]]
     @show() unless @hidden
 
-  resetValue: (val) -> @setValue(@start_value)
+  resetValue: () -> @setValue(@start_value)
   inc: (n=1) -> @increment(n)
   dec: (n=1) -> @decrement(n)
   increment: (n=1) -> @setValue(@value + n)

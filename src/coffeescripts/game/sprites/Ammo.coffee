@@ -8,11 +8,15 @@ class Ammo extends Phaser.Sprite
 
     # clean up
     @game.add.existing @
+    @hide()
 
     # add crop rect
     @cropRect = @game.add.graphics()
 
     return @
+
+  show: -> @reset @x, @y
+  hide: -> @kill()
 
   crop: ->
     width = @width - @player.num_bullets / 6 * @width

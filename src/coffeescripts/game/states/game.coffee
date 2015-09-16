@@ -46,7 +46,7 @@ class Game
     @timer = @game.time.create(false)
     @countdown = @game.time.create(false)
     @game.time.events.loop(1000, @updateTimer, @).autoDestroy = true
-    # @game.time.events.add(1000, @updateCountdown, @).autoDestroy = true
+    @game.time.events.loop(1000, @updateCountdown, @).autoDestroy = true
 
     # create the players
     @player_one = new Cowboy @game, @
@@ -67,8 +67,9 @@ class Game
     # intro the level, place terrain on the map
     @setupLevel()
     # enable movement
-    @player_one.enableInput()
-    @player_two.enableInput()
+    for player in @players
+      player.enableInput()
+      player.ammo.show()
     # start timer
     @hud_timer.show()
     @timer.start()
@@ -88,6 +89,10 @@ class Game
       # increase score of winning player
       bullet.player.idle()
       bullet.player.wins += 1
+      if bullet.player.is_player_one
+        @hud_score_player_one.inc()
+      else
+        @hud_score_player_two.inc()
       # increase game's level
       @game.level += 1
       # trigger player death
@@ -103,6 +108,12 @@ class Game
     @game.physics.arcade.collide @bullets, @wagon, (wagon, bullet) =>
       bullet.kill()
 
+    # show hud_countdown if player is out of bullets
+    if @hud_countdown.hidden and (@player_one.num_bullets is 0 or @player_two.num_bullets is 0)
+      @hud_countdown.resetValue()
+      @hud_countdown.show()
+      @countdown.start()
+
   render: ->
     if @game.debugMode
       @game.debug.body @ceiling
@@ -116,7 +127,9 @@ class Game
       # @game.debug.body @wagon
 
   updateTimer: -> @hud_timer.dec() if @hud_timer.value > 0
-  updateCountdown: -> @hud_countdown.dec() if @hud_countdown.value > 0
+  updateCountdown: ->
+    @hud_countdown.dec() if @hud_countdown.value > 0
+    # @nextLevel if @hud_countdown.value is 0
 
   setupLevel: ->
     level_num = @game.level
@@ -129,7 +142,6 @@ class Game
     @hud_score_player_one.show()
     @hud_score_player_two.show()
     @hud_timer.show()
-    @hud_countdown.show()
 
   hideHud: ->
     @hud_score_player_one.hide()
