@@ -2,7 +2,7 @@ class Ammo extends Phaser.Sprite
   constructor: (@game, @game_state, @player) ->
     key = 'atlas'
     frame = 'ammo'
-    x = if @player.is_player_one then 92 else 816
+    x = if @player.is_player_one then 94 else 816
     y = @game.height - 45
     super @game, x, y, key, frame
 

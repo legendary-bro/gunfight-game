@@ -1,3 +1,4 @@
+When = require 'when'
 Bullets = require './Bullets.coffee'
 Ammo = require './Ammo.coffee'
 Text = require './Text.coffee'
@@ -49,8 +50,6 @@ class Cowboy extends Phaser.Sprite
     # change body size for more accurate hit collision
     @body.setSize 45, 136, 25, 0
     @body.setSize 45, 136, -25, 0 if @is_player_one
-    # collide with world
-    @body.collideWorldBounds = true
     # don't let bullet physics push ya back
     @body.immovable = true
     # set anchor to horizontal center so sprite flips around its middle
@@ -100,23 +99,44 @@ class Cowboy extends Phaser.Sprite
 
     # clean up
     @game.add.existing @
-    # @kill()
+    @kill()
 
     return @
 
+  runIntro: (cb) ->
+    @intro_callback = cb
+    @reload()
+    @kill()
+    @in_intro_cutscene = true
+    if @is_player_one
+      @reset(-48, PLAYER_ONE_Y)
+      @direction.right = true
+    else
+      @reset(1136 , PLAYER_TWO_Y)
+      @direction.left = true
+    @gun_pos_index = 2
+    @moving = true
+
   update: ->
     # handle incremental movement
-    if @state.current != 'dying' and !@input_disabled
+    if @state.current != 'dying' and (!@input_disabled or @in_intro_cutscene)
       current_time = Date.now()
       if current_time - @time > SPEED
-        @body.y -= DELTA if @direction.up    and @body.y > @game_state.ceiling.y
-        @body.y += DELTA if @direction.down  and @body.y < @game_state.floor.y - @body.height
+        @body.y -= DELTA if @direction.up    and @body.y > @game_state.ceiling.y and !@in_intro_cutscene
+        @body.y += DELTA if @direction.down  and @body.y < @game_state.floor.y - @body.height and !@in_intro_cutscene
         if @is_player_one
           @body.x -= DELTA if @direction.left  and @body.x > @game_state.left_wall_outer.body.x
           @body.x += DELTA if @direction.right and @body.right < @game_state.left_wall.body.x
+          if @in_intro_cutscene and @body.right >= PLAYER_ONE_X
+            @in_intro_cutscene = false
+            @direction.right = false
         else
           @body.x -= DELTA if @direction.left  and @body.x > @game_state.right_wall.body.x
           @body.x += DELTA if @direction.right and @body.right < @game_state.right_wall_outer.body.x
+          if @in_intro_cutscene and @body.x <= PLAYER_TWO_X
+            @in_intro_cutscene = false
+            @direction.left = false
+            @intro_callback() # call the intro callback
         # @animate_aim_up()  if @aim.up
         # @animate_aim_down() if @aim.down
         @time = current_time
@@ -171,31 +191,34 @@ class Cowboy extends Phaser.Sprite
   reload: ->
     @num_bullets = 6
     @ammo.reload()
+    b.kill() for b in @bullets.children
 
   # handle aiming animations
   animate_aim_up: ->
-    current_frame = @animations.currentFrame.name
-    @gun_pos_index += 1 if @gun_pos_index < @gun_pos.length - 1
+    unless @in_intro_cutscene
+      current_frame = @animations.currentFrame.name
+      @gun_pos_index += 1 if @gun_pos_index < @gun_pos.length - 1
 
-    for pos, index in @leg_pos
-      @leg_pos_index = index
-      break if current_frame.match pos
+      for pos, index in @leg_pos
+        @leg_pos_index = index
+        break if current_frame.match pos
 
-    @animations.stop()
-    @animations.play "move-#{@gun_pos[@gun_pos_index]}"
-    @animations.next @leg_pos_index
+      @animations.stop()
+      @animations.play "move-#{@gun_pos[@gun_pos_index]}"
+      @animations.next @leg_pos_index
 
   animate_aim_down: ->
-    current_frame = @animations.currentFrame.name
-    @gun_pos_index -= 1 if @gun_pos_index > 0
+    unless @in_intro_cutscene
+      current_frame = @animations.currentFrame.name
+      @gun_pos_index -= 1 if @gun_pos_index > 0
 
-    for pos, index in @leg_pos
-      @leg_pos_index = index
-      break if current_frame.match pos
+      for pos, index in @leg_pos
+        @leg_pos_index = index
+        break if current_frame.match pos
 
-    @animations.stop()
-    @animations.play "move-#{@gun_pos[@gun_pos_index]}"
-    @animations.next @leg_pos_index
+      @animations.stop()
+      @animations.play "move-#{@gun_pos[@gun_pos_index]}"
+      @animations.next @leg_pos_index
 
   # shoot!
   shoot: ->

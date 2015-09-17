@@ -45,7 +45,10 @@ class Integer
     @left_digit.hide() if @left_digit
     @right_digit.hide() if @right_digit
     # handle single digit start value
-    if @value < 10
+    if @value < 0
+      @left_digit = @undefined
+      @right_digit = @right_digits[0]
+    else if @value < 10
       @left_digit = @undefined
       @right_digit = @right_digits[String(@value).split('')[0]]
     else

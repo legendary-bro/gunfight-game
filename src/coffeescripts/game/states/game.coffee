@@ -45,8 +45,6 @@ class Game
     # timers
     @timer = @game.time.create(false)
     @countdown = @game.time.create(false)
-    @game.time.events.loop(1000, @updateTimer, @).autoDestroy = true
-    @game.time.events.loop(1000, @updateCountdown, @).autoDestroy = true
 
     # create the players
     @player_one = new Cowboy @game, @
@@ -64,15 +62,23 @@ class Game
     @start()
 
   start: ->
-    # intro the level, place terrain on the map
-    @setupLevel()
-    # enable movement
-    for player in @players
-      player.enableInput()
-      player.ammo.show()
-    # start timer
-    @hud_timer.show()
-    @timer.start()
+    @setupLevel() # setup and show terrain
+    @hud_timer.show() # show timer
+    player.ammo.show() for player in @players
+    @text_get_ready.show()
+    @runIntro =>
+      @text_get_ready.hide()
+      @text_draw.show()
+      setTimeout () =>
+        @text_draw.hide() # hide draw!
+        player.enableInput() for player in @players # enabel movement
+        # start timers
+        @game.time.events.loop(1000, @updateTimer, @).autoDestroy = true
+        @game.time.events.loop(1000, @updateCountdown, @).autoDestroy = true
+        @timer.start()
+        @countdown.start()
+      , 700
+
 
   update: ->
     # set bounce surfaces for bullets
@@ -97,6 +103,9 @@ class Game
       @game.level += 1
       # trigger player death
       player.die()
+      setTimeout () =>
+        @nextLevel() unless @game_over
+      , 2000
 
     # set terrain, bullet collisions
     @game.physics.arcade.collide @bullets, @terrain, (bullet, terrain) =>
@@ -108,35 +117,73 @@ class Game
     @game.physics.arcade.collide @bullets, @wagon, (wagon, bullet) =>
       bullet.kill()
 
-    # show hud_countdown if player is out of bullets
-    if @hud_countdown.hidden and (@player_one.num_bullets is 0 or @player_two.num_bullets is 0)
-      @hud_countdown.resetValue()
-      @hud_countdown.show()
-      @countdown.start()
-
   render: ->
-    if @game.debugMode
-      @game.debug.body @ceiling
-      @game.debug.body @floor
-      @game.debug.body @left_wall
-      @game.debug.body @right_wall
-      @game.debug.body @player_one
-      @game.debug.body @player_two
-      # @game.debug.body @player_one.bullets
-      # @game.debug.body @player_two.bullets
-      # @game.debug.body @wagon
+    # if @game.debugMode
+    #   @game.debug.body @ceiling
+    #   @game.debug.body @floor
+    #   @game.debug.body @left_wall
+    #   @game.debug.body @right_wall
+    #   @game.debug.body @player_one
+    #   @game.debug.body @player_two
+    #   @game.debug.body @player_one.bullets
+    #   @game.debug.body @player_two.bullets
+    #   @game.debug.body @wagon
 
-  updateTimer: -> @hud_timer.dec() if @hud_timer.value > 0
+  updateTimer: ->
+    @hud_timer.dec() if @hud_timer.value > 0
+    @gameOver() if @hud_timer.value is 0
+
   updateCountdown: ->
-    @hud_countdown.dec() if @hud_countdown.value > 0
-    # @nextLevel if @hud_countdown.value is 0
+    unless @game_over
+      if @player_one.num_bullets is 0 or @player_two.num_bullets is 0
+        @hud_countdown.show()
+        @hud_countdown.dec() if @hud_countdown.value > 0
+        @nextLevel() if @hud_countdown.value is 0
+      @nextLevel() if @player_one.num_bullets is 0 and @player_two.num_bullets is 0
 
   setupLevel: ->
     level_num = @game.level
-    level = @game.constants.LEVELS["#{level_num}"]
+    level = @game.constants.LEVELS[level_num]
+    @terrain.destroy() if @terrain
     @terrain = new TerrainGroup @game, @, level
     @showHud()
     @wagon.start() if level.wagon
+
+  nextLevel: ->
+    levels_length = Object.keys(@game.constants.LEVELS).length
+    @game.level += if (levels_length > @game.level) then 1 else 0
+    for player in @players
+      player.text.hide()
+      player.reload()
+      player.idle()
+      player.disableInput()
+    @hud_countdown.hide()
+    @hud_countdown.resetValue()
+    @setupLevel()
+    @text_get_ready.show()
+    @runIntro =>
+      @text_get_ready.hide()
+      @text_draw.show()
+      setTimeout () =>
+        @text_draw.hide() # hide draw!
+        player.enableInput() for player in @players # enable movement
+      , 700
+
+  gameOver: ->
+    @game_over = true
+    @hideHud()
+    @terrain.destroy()
+    @wagon.destoy()
+    for player in @players
+      player.ammo.destroy()
+      player.destroy()
+    @text_game.show()
+    @text_over.show()
+    # setTimeout () =>
+    #   @state.start 'intro'
+    # , 1000
+
+  runIntro: (cb) -> player.runIntro(cb) for player in @players
 
   showHud: ->
     @hud_score_player_one.show()
@@ -144,9 +191,8 @@ class Game
     @hud_timer.show()
 
   hideHud: ->
-    @hud_score_player_one.hide()
-    @hud_score_player_two.hide()
     @hud_timer.hide()
     @hud_countdown.hide()
+    player.text.hide() for player in @players
 
 module.exports = Game
