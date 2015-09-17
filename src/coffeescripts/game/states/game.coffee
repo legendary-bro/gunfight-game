@@ -39,8 +39,8 @@ class Game
     # setup the hud
     @hud_score_player_one = new Integer @game, @, 0, 200, 5
     @hud_score_player_two = new Integer @game, @, 0, 830, 5
-    @hud_timer            = new Integer @game, @, 70, 644, 5
-    @hud_countdown        = new Integer @game, @, 10, 400, 5
+    @hud_timer            = new Integer @game, @, STARTING_TIME, 644, 5
+    @hud_countdown        = new Integer @game, @, NO_AMMO_COUNTDOWN, 400, 5
 
     # timers
     @timer = @game.time.create(false)
@@ -99,8 +99,6 @@ class Game
         @hud_score_player_one.inc()
       else
         @hud_score_player_two.inc()
-      # increase game's level
-      @game.level += 1
       # trigger player death
       player.die()
       setTimeout () =>
@@ -143,6 +141,7 @@ class Game
 
   setupLevel: ->
     level_num = @game.level
+    console.log level_num
     level = @game.constants.LEVELS[level_num]
     @terrain.destroy() if @terrain
     @terrain = new TerrainGroup @game, @, level
@@ -170,10 +169,12 @@ class Game
       , 700
 
   gameOver: ->
+    @game.score_player_one = @player_one.wins
+    @game.score_player_two = @player_two.wins
     @game_over = true
     @hideHud()
     @terrain.destroy()
-    @wagon.destoy()
+    @wagon.destroy()
     for player in @players
       player.ammo.destroy()
       player.destroy()

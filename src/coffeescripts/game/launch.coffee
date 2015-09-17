@@ -34,7 +34,7 @@ launch = (cdn="/", version="?v=0.0.0") ->
 
   # debug
   game.debugMode = false
-  game.debugMode = true
+  # game.debugMode = true
 
   game.enableMusic = !game.debugMode
   game.enableSFX = !game.debugMode
@@ -47,6 +47,9 @@ launch = (cdn="/", version="?v=0.0.0") ->
 
   # default level
   game.level = 1
+  # default scores
+  game.score_player_one = 0
+  game.score_player_two = 0
 
   # keep the game within the page
   game.scaler = ->
