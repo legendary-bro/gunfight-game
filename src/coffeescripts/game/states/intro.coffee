@@ -16,6 +16,9 @@ class Intro
   constructor: ->
 
   create: ->
+    # is intro flag
+    @is_intro = true
+
     # create the bounds
     @ceiling    = new Ceiling @game, 45
     @floor      = new Floor @game, -45
@@ -26,15 +29,14 @@ class Intro
 
     # setup the text
     @text_gun_fight =   new Text @game, @, 'gun fight', 408, 250
-    @text_get_ready =   new Text @game, @, 'get ready', 408, 250
     @text_insert_coin = new Text @game, @, 'insert coin', 700, 771
     @text_draw =        new Text @game, @, 'draw', 466, 250
     @text_game =        new Text @game, @, 'game', 370, 5
     @text_over =        new Text @game, @, 'over', 599, 5
 
     # setup the hud
-    @hud_score_player_one = new Integer @game, @game.score_player_one, 0, 200, 5
-    @hud_score_player_two = new Integer @game, @game.score_player_two, 0, 830, 5
+    @hud_score_player_one = new Integer @game, @, @game.score_player_one, 200, 5
+    @hud_score_player_two = new Integer @game, @, @game.score_player_two, 830, 5
 
     # create the players
     @cowboy = new Cowboy @game, @
@@ -49,7 +51,31 @@ class Intro
     @start()
 
   start: ->
+    # show text
+    @text_gun_fight.show()
+    @text_game.show()
+    @text_over.show()
+    @text_insert_coin.show()
+
+    @hud_score_player_one.show()
+    @hud_score_player_two.show()
+
+    @runIntro =>
+    #   @text_get_ready.hide()
+    #   @text_draw.show()
+    #   setTimeout () =>
+    #     @text_draw.hide() # hide draw!
+    #     player.enableInput() for player in @players # enabel movement
+    #     # start timers
+    #     @game.time.events.loop(1000, @updateTimer, @).autoDestroy = true
+    #     @game.time.events.loop(1000, @updateCountdown, @).autoDestroy = true
+    #     @timer.start()
+    #     @countdown.start()
+    #   , 700
+
 
   update: ->
+
+  runIntro: (cb) -> player.runIntro(cb) for player in @players
 
 module.exports = Intro

@@ -91,7 +91,7 @@ class Cowboy extends Phaser.Sprite
     @text = new Text @game, @game_state, 'got me'
 
     # setup controls
-    @setupControls()
+    @setupControls() unless @game_state.is_intro
     # setup animations
     @setupAnimations()
     # create state machine
@@ -107,19 +107,25 @@ class Cowboy extends Phaser.Sprite
     @intro_callback = cb
     @reload()
     @kill()
-    @in_intro_cutscene = true
     if @is_player_one
       @reset(-48, PLAYER_ONE_Y)
       @direction.right = true
     else
       @reset(1136 , PLAYER_TWO_Y)
       @direction.left = true
-    @gun_pos_index = 2
+
+    if @game_state.is_intro
+      @in_intro_loop = true
+      @gun_pos_index = 0
+    else
+      @in_intro_cutscene = true
+      @gun_pos_index = 2
+
     @moving = true
 
   update: ->
     # handle incremental movement
-    if @state.current != 'dying' and (!@input_disabled or @in_intro_cutscene)
+    if @state.current != 'dying' and (!@input_disabled or (@in_intro_cutscene or @in_intro_loop))
       current_time = Date.now()
       if current_time - @time > SPEED
         @body.y -= DELTA if @direction.up    and @body.y > @game_state.ceiling.y and !@in_intro_cutscene
@@ -127,9 +133,16 @@ class Cowboy extends Phaser.Sprite
         if @is_player_one
           @body.x -= DELTA if @direction.left  and @body.x > @game_state.left_wall_outer.body.x
           @body.x += DELTA if @direction.right and @body.right < @game_state.left_wall.body.x
+
+          # handle intro cutscene (between rounds)
           if @in_intro_cutscene and @body.right >= PLAYER_ONE_X
             @in_intro_cutscene = false
             @direction.right = false
+          # hanlde looping intro (game start and game over)
+          if @in_intro_loop and @body.x >= PLAYER_ONE_X
+            @in_intro_loop = false
+            @direction.right = false
+
         else
           @body.x -= DELTA if @direction.left  and @body.x > @game_state.right_wall.body.x
           @body.x += DELTA if @direction.right and @body.right < @game_state.right_wall_outer.body.x
