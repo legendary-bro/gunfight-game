@@ -19,10 +19,6 @@ class Preload
       "#{CDN}audio/#{sfx}.ogg#{@game.version}"]
       asset.crossOrigin = @load.crossOrigin  unless @game.cdn is '/'
 
-  update: ->
-    if @game.debugMode
-      @state.start 'game'
-    else
-      @state.start 'intro'
+  update: -> @state.start 'intro'
 
 module.exports = Preload

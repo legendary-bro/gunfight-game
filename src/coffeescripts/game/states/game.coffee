@@ -24,7 +24,7 @@ class Game
     @ceiling    = new Ceiling @game, 45
     @floor      = new Floor @game, -45
     @left_wall_outer = new Wall @game, 92
-    @left_wall  = new Wall @game, @game.world.width / 2 - WALL_OFFSET
+    # @left_wall  = new Wall @game, @game.world.width / 2 - WALL_OFFSET
     @right_wall_outer = new Wall @game, 996
     @right_wall = new Wall @game, @game.world.width / 2  + WALL_OFFSET
 
@@ -117,15 +117,15 @@ class Game
 
   render: ->
     # if @game.debugMode
-    #   @game.debug.body @ceiling
-    #   @game.debug.body @floor
-    #   @game.debug.body @left_wall
-    #   @game.debug.body @right_wall
-    #   @game.debug.body @player_one
-    #   @game.debug.body @player_two
-    #   @game.debug.body @player_one.bullets
-    #   @game.debug.body @player_two.bullets
-    #   @game.debug.body @wagon
+    @game.debug.body @ceiling
+    @game.debug.body @floor
+    @game.debug.body @left_wall
+    @game.debug.body @right_wall
+    @game.debug.body @player_one
+    @game.debug.body @player_two
+    @game.debug.body @player_one.bullets
+    @game.debug.body @player_two.bullets
+    @game.debug.body @wagon
 
   updateTimer: ->
     @hud_timer.dec() if @hud_timer.value > 0
@@ -141,7 +141,6 @@ class Game
 
   setupLevel: ->
     level_num = @game.level
-    console.log level_num
     level = @game.constants.LEVELS[level_num]
     @terrain.destroy() if @terrain
     @terrain = new TerrainGroup @game, @, level

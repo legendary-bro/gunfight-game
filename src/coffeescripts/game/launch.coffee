@@ -34,7 +34,7 @@ launch = (cdn="/", version="?v=0.0.0") ->
 
   # debug
   game.debugMode = false
-  # game.debugMode = true
+  game.debugMode = true
 
   game.enableMusic = !game.debugMode
   game.enableSFX = !game.debugMode

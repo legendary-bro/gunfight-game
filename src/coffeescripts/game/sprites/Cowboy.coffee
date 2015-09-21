@@ -117,6 +117,7 @@ class Cowboy extends Phaser.Sprite
     if @game_state.is_intro
       @in_intro_loop = true
       @gun_pos_index = 0
+      DELTA = 10
     else
       @in_intro_cutscene = true
       @gun_pos_index = 2
@@ -140,6 +141,7 @@ class Cowboy extends Phaser.Sprite
             @direction.right = false
           # hanlde looping intro (game start and game over)
           if @in_intro_loop and @body.x >= PLAYER_ONE_X
+            console.log 'heyo'
             @in_intro_loop = false
             @direction.right = false
 

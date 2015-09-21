@@ -24,8 +24,6 @@ class Intro
     @floor      = new Floor @game, -45
     @left_wall_outer = new Wall @game, 92
     @left_wall  = new Wall @game, @game.world.width / 2 - WALL_OFFSET
-    @right_wall_outer = new Wall @game, 996
-    @right_wall = new Wall @game, @game.world.width / 2  + WALL_OFFSET
 
     # setup the text
     @text_gun_fight =   new Text @game, @, 'gun fight', 408, 250
@@ -61,6 +59,7 @@ class Intro
     @hud_score_player_two.show()
 
     @runIntro =>
+      console.log 'intro dun'
     #   @text_get_ready.hide()
     #   @text_draw.show()
     #   setTimeout () =>
@@ -73,6 +72,14 @@ class Intro
     #     @countdown.start()
     #   , 700
 
+  render: ->
+    if @game.debugMode
+      @game.debug.body @ceiling
+      @game.debug.body @floor
+      @game.debug.body @left_wall
+      # @game.debug.body @left_wall_outer
+      @game.debug.body @cowboy
+      @game.debug.body @cowboy.bullets
 
   update: ->
 
