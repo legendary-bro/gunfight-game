@@ -16,14 +16,19 @@ class Intro
   constructor: ->
 
   create: ->
+    # remove previous event listeners
+    @game.input.onDown.removeAll()
+    @game.input.onUp.removeAll()
+    @game.input.activePointer.leftButton.onUp.removeAll()
+
     # is intro flag
     @is_intro = true
 
     # create the bounds
     @ceiling    = new Ceiling @game, 45
     @floor      = new Floor @game, -45
-    @left_wall_outer = new Wall @game, 92
-    @left_wall  = new Wall @game, @game.world.width / 2 - WALL_OFFSET
+    @left_wall  = new Wall @game, @game.world.width / 2 - WALL_OFFSET + 100
+    @left_wall_outer = new Wall @game, -200
 
     # setup the text
     @text_gun_fight =   new Text @game, @, 'gun fight', 408, 250
@@ -54,34 +59,24 @@ class Intro
     @text_game.show()
     @text_over.show()
     @text_insert_coin.show()
-
+    # show score
     @hud_score_player_one.show()
     @hud_score_player_two.show()
-
-    @runIntro =>
-      console.log 'intro dun'
-    #   @text_get_ready.hide()
-    #   @text_draw.show()
-    #   setTimeout () =>
-    #     @text_draw.hide() # hide draw!
-    #     player.enableInput() for player in @players # enabel movement
-    #     # start timers
-    #     @game.time.events.loop(1000, @updateTimer, @).autoDestroy = true
-    #     @game.time.events.loop(1000, @updateCountdown, @).autoDestroy = true
-    #     @timer.start()
-    #     @countdown.start()
-    #   , 700
+    # click handler
+    @game.input.activePointer.leftButton.onUp.add => @state.start 'game'
+    # run the intro sequence
+    @runIntro()
 
   render: ->
     if @game.debugMode
       @game.debug.body @ceiling
       @game.debug.body @floor
       @game.debug.body @left_wall
-      # @game.debug.body @left_wall_outer
+      @game.debug.body @left_wall_outer
       @game.debug.body @cowboy
       @game.debug.body @cowboy.bullets
 
-  update: ->
+  update: -> @game.physics.arcade.collide @bullets, @surfaces
 
   runIntro: (cb) -> player.runIntro(cb) for player in @players
 

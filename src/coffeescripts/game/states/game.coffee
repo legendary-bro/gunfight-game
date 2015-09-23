@@ -20,11 +20,16 @@ class Game
   constructor: ->
 
   create: ->
+    # remove previous event listeners
+    @game.input.onDown.removeAll()
+    @game.input.onUp.removeAll()
+    @game.input.activePointer.leftButton.onUp.removeAll()
+
     # create the bounds
     @ceiling    = new Ceiling @game, 45
     @floor      = new Floor @game, -45
     @left_wall_outer = new Wall @game, 92
-    # @left_wall  = new Wall @game, @game.world.width / 2 - WALL_OFFSET
+    @left_wall  = new Wall @game, @game.world.width / 2 - WALL_OFFSET
     @right_wall_outer = new Wall @game, 996
     @right_wall = new Wall @game, @game.world.width / 2  + WALL_OFFSET
 
@@ -116,16 +121,16 @@ class Game
       bullet.kill()
 
   render: ->
-    # if @game.debugMode
-    @game.debug.body @ceiling
-    @game.debug.body @floor
-    @game.debug.body @left_wall
-    @game.debug.body @right_wall
-    @game.debug.body @player_one
-    @game.debug.body @player_two
-    @game.debug.body @player_one.bullets
-    @game.debug.body @player_two.bullets
-    @game.debug.body @wagon
+    if @game.debugMode
+      @game.debug.body @ceiling
+      @game.debug.body @floor
+      @game.debug.body @left_wall
+      @game.debug.body @right_wall
+      @game.debug.body @player_one
+      @game.debug.body @player_two
+      @game.debug.body @player_one.bullets
+      @game.debug.body @player_two.bullets
+      @game.debug.body @wagon
 
   updateTimer: ->
     @hud_timer.dec() if @hud_timer.value > 0
@@ -137,11 +142,12 @@ class Game
         @hud_countdown.show()
         @hud_countdown.dec() if @hud_countdown.value > 0
         @nextLevel() if @hud_countdown.value is 0
-      @nextLevel() if @player_one.num_bullets is 0 and @player_two.num_bullets is 0
+      @nextLevel() if @player_one.num_bullets is 0 and @player_two.num_bullets is 0 and @player_one.bullets.countDead() is 6 and @player_two.bullets.countDead() is 6 and !@player_one.input_disabled and !@player_two.input_disabled
 
   setupLevel: ->
     level_num = @game.level
     level = @game.constants.LEVELS[level_num]
+    _terrain.cropRect.destroy() for _terrain in @terrain.children if @terrain
     @terrain.destroy() if @terrain
     @terrain = new TerrainGroup @game, @, level
     @showHud()
@@ -179,9 +185,9 @@ class Game
       player.destroy()
     @text_game.show()
     @text_over.show()
-    # setTimeout () =>
-    #   @state.start 'intro'
-    # , 1000
+    setTimeout () =>
+      @state.start 'intro'
+    , 1500
 
   runIntro: (cb) -> player.runIntro(cb) for player in @players
 

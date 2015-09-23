@@ -7,7 +7,7 @@ GUN_POS_CONFIG =
   low:     {x: 45, y: 88, deg: 42}
 
 # speed of fired bullet
-SPEED = 1000
+SPEED = 750
 
 class Bullet extends Phaser.Sprite
   constructor: (@game, @game_state, @player) ->
@@ -27,6 +27,7 @@ class Bullet extends Phaser.Sprite
     @is_player_one = @player.is_player_one
 
     # bounds
+    @checkWorldBounds = true
     @outOfBoundsKill = true
 
     # clean up
@@ -43,6 +44,8 @@ class Bullet extends Phaser.Sprite
     angle = if @is_player_one then pos.deg else 180 - pos.deg
     # revive the bullet
     @reset x, y
+    # bring to top
+    @game.world.bringToTop @
     # set velocity
     @game.physics.arcade.velocityFromAngle angle, SPEED, @body.velocity
 
@@ -52,6 +55,7 @@ class Bullets extends Phaser.Group
     @add new Bullet(@game, @game_state, @player) for n in [1..@player.num_bullets]
 
     @game.add.existing @
+    @game.world.bringToTop @
 
   shoot: -> @getFirstDead().shoot()
 

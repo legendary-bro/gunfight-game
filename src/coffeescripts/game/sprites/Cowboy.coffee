@@ -117,7 +117,6 @@ class Cowboy extends Phaser.Sprite
     if @game_state.is_intro
       @in_intro_loop = true
       @gun_pos_index = 0
-      DELTA = 10
     else
       @in_intro_cutscene = true
       @gun_pos_index = 2
@@ -135,15 +134,33 @@ class Cowboy extends Phaser.Sprite
           @body.x -= DELTA if @direction.left  and @body.x > @game_state.left_wall_outer.body.x
           @body.x += DELTA if @direction.right and @body.right < @game_state.left_wall.body.x
 
+    # ------------------ CUTSCENES ------------------
           # handle intro cutscene (between rounds)
           if @in_intro_cutscene and @body.right >= PLAYER_ONE_X
             @in_intro_cutscene = false
             @direction.right = false
-          # hanlde looping intro (game start and game over)
-          if @in_intro_loop and @body.x >= PLAYER_ONE_X
-            console.log 'heyo'
-            @in_intro_loop = false
-            @direction.right = false
+          # handle looping intro (game start and game over)
+          if @in_intro_loop
+            # move right
+            if @body.right >= @game_state.left_wall.body.x and @direction.right and @scale.x == -1
+              @direction.right = false
+              setTimeout =>               # shoot
+                @shoot()
+              , 1500
+              setTimeout =>              # and turn around
+                @direction.left = true
+                @moving = true
+                @aim_up() for i in [1..4]
+                @scale.x = 1
+              , 5500
+            # move left
+            if @body.x <= @game_state.left_wall_outer.body.x and @direction.left
+              @direction.left = false
+              @reload()
+              @aim_down() for i in [1..4]
+              @scale.x = -1
+              @direction.right = true
+    # -----------------------------------------------
 
         else
           @body.x -= DELTA if @direction.left  and @body.x > @game_state.right_wall.body.x
@@ -237,7 +254,7 @@ class Cowboy extends Phaser.Sprite
 
   # shoot!
   shoot: ->
-    if @num_bullets > 0 and !@input_disabled
+    if @num_bullets > 0 and (!@input_disabled or @in_intro_loop)
       @num_bullets -= 1
       @ammo.crop()
       @bullets.shoot()

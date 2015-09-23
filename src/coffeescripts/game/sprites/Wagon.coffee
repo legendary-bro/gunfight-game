@@ -30,6 +30,7 @@ class Wagon extends Phaser.Sprite
 
   start: ->
     @revive()
+    @game.world.bringToTop @
     @roll()
 
   update: ->
