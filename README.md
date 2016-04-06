@@ -1,4 +1,4 @@
-# Gun Fight  
+# Gun Fight - the first "person shooter"
 <a href="http://youfoundron.com/gunfight/"><h2>Play</h2></a>
 ![Gun Fight game](http://youfoundron.com/cdn/images/gunfight-gif.gif)
 
